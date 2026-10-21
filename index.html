@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cookbook</title>
+  <meta name="description" content="Personal cookbook with follow-along cooking mode and a shopping list builder.">
+  <meta name="theme-color" content="#faf6f0" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1613" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Cookbook">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/recipes">
+      <img src="icons/icon.svg" alt="" width="28" height="28">
+      <span>Cookbook</span>
+    </a>
+    <nav class="tabs" aria-label="Main">
+      <a href="#/recipes" data-tab="recipes">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15Z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/><path d="M9 7h6"/></svg>
+        <span>Recipes</span>
+      </a>
+      <a href="#/cook" data-tab="cook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h18"/><path d="M5 11v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6"/><path d="M9 7.5c0-1.2 1.2-1.6 1.2-3M13.8 7.5c0-1.2 1.2-1.6 1.2-3"/></svg>
+        <span>Cook</span>
+      </a>
+      <a href="#/shop" data-tab="shop">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/><path d="M3 4h2.2l2.3 11h10.3L20 8H6.3"/></svg>
+        <span>Shopping</span>
+        <b class="badge" id="shopBadge" hidden></b>
+      </a>
+    </nav>
+    <button id="installBtn" class="btn small" type="button" hidden>Install app</button>
+  </header>
+
+  <main id="view" tabindex="-1"></main>
+
+  <div id="timerTray" class="timer-tray" aria-live="polite"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="recipes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
