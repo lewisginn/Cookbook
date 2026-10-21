@@ -436,7 +436,7 @@ window.RECIPES = [
       { group: 'Sauce', qty: 2, unit: 'tbsp', item: 'fish sauce', aisle: 'international' },
       { group: 'Sauce', qty: 3, unit: 'tbsp', item: 'palm sugar', note: 'or light brown sugar', aisle: 'international' },
       { group: 'Stir-fry', qty: 6, unit: 'oz', item: 'dried rice stick noodles', note: '¼-inch / pad thai width', aisle: 'international' },
-      { group: 'Stir-fry', qty: 8, unit: 'oz', item: 'large shrimp', note: 'peeled and deveined', aisle: 'seafood' },
+      { group: 'Stir-fry', qty: 0.5, unit: 'lb', item: 'large shrimp', note: 'peeled and deveined', aisle: 'seafood' },
       { group: 'Stir-fry', qty: 3, unit: 'tbsp', item: 'vegetable oil', note: 'divided', aisle: 'pantry', staple: true },
       { group: 'Stir-fry', qty: 1, item: 'shallot', note: 'thinly sliced', shop: 'shallots', aisle: 'produce' },
       { group: 'Stir-fry', qty: 3, item: 'garlic cloves', note: 'minced', aisle: 'produce' },
@@ -752,6 +752,154 @@ window.RECIPES = [
       'Green shakshuka variation: swap the tomatoes for sautéed spinach, chard and leeks.'
     ]
   },
+  {
+    id: 'chicken-shawarma',
+    name: 'Chicken Shawarma',
+    nativeName: 'شاورما',
+    short: 'Shawarma',
+    region: 'Middle Eastern',
+    cuisine: 'Levantine',
+    emoji: '🥙',
+    description:
+      'Warm-spiced, lemony chicken thighs roasted hot until the edges char, sliced thin and stuffed into pita with creamy tahini-yogurt sauce, tomato, cucumber and onion.',
+    servings: 4,
+    time: { prep: 20, cook: 30, inactive: 120, inactiveLabel: 'marinate' },
+    heat: 1,
+    tags: ['chicken', 'wraps', 'sheet-pan'],
+    ingredients: [
+      { group: 'Chicken', qty: 2, unit: 'lb', item: 'boneless skinless chicken thighs', aisle: 'meat' },
+      { group: 'Chicken', qty: 0.25, unit: 'cup', item: 'olive oil', aisle: 'pantry', staple: true },
+      { group: 'Chicken', qty: 1, item: 'lemons', note: 'juiced', aisle: 'produce' },
+      { group: 'Chicken', qty: 5, item: 'garlic cloves', note: 'grated', aisle: 'produce' },
+      { group: 'Chicken', qty: 2, unit: 'tsp', item: 'ground cumin', aisle: 'spices' },
+      { group: 'Chicken', qty: 2, unit: 'tsp', item: 'sweet paprika', aisle: 'spices' },
+      { group: 'Chicken', qty: 1, unit: 'tsp', item: 'ground coriander', aisle: 'spices' },
+      { group: 'Chicken', qty: 0.5, unit: 'tsp', item: 'ground turmeric', aisle: 'spices' },
+      { group: 'Chicken', qty: 0.25, unit: 'tsp', item: 'ground cinnamon', aisle: 'spices' },
+      { group: 'Chicken', qty: 0.25, unit: 'tsp', item: 'cayenne pepper', aisle: 'spices' },
+      { group: 'Chicken', qty: 1.5, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Chicken', qty: 0.5, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'Tahini sauce', qty: 0.33, unit: 'cup', item: 'tahini', aisle: 'international' },
+      { group: 'Tahini sauce', qty: 0.5, unit: 'cup', item: 'plain Greek yogurt', aisle: 'dairy' },
+      { group: 'Tahini sauce', qty: 0.5, item: 'lemon', note: 'juiced', shop: 'lemons', aisle: 'produce' },
+      { group: 'Tahini sauce', qty: 1, item: 'garlic cloves', note: 'grated', aisle: 'produce' },
+      { group: 'Tahini sauce', qty: 0.25, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Tahini sauce', qty: 3, unit: 'tbsp', item: 'water', aisle: 'none' },
+      { group: 'To serve', qty: 4, item: 'pita breads', aisle: 'bakery' },
+      { group: 'To serve', qty: 2, item: 'Roma tomatoes', note: 'diced', aisle: 'produce' },
+      { group: 'To serve', qty: 1, item: 'cucumber', note: 'diced', shop: 'cucumbers', aisle: 'produce' },
+      { group: 'To serve', qty: 0.5, item: 'red onion', note: 'thinly sliced', shop: 'red onions', aisle: 'produce' },
+      { group: 'To serve', qty: 0.25, unit: 'cup', item: 'flat-leaf parsley', note: 'chopped', aisle: 'produce' },
+      { group: 'To serve', item: 'pickled turnips', note: 'the bright pink ones', optional: true, aisle: 'international' }
+    ],
+    steps: [
+      {
+        title: 'Marinate',
+        text: 'Whisk the oil, lemon juice, garlic, all the spices, salt and pepper in a bowl. Add the chicken, turn to coat, cover and refrigerate for at least 2 hours, or overnight.'
+      },
+      {
+        title: 'Roast hot',
+        text: 'Heat the oven to 425°F. Spread the chicken on a foil-lined sheet pan in a single layer and roast for 25 minutes until cooked through and browned at the edges.'
+      },
+      {
+        title: 'Char',
+        text: 'Switch the oven to broil and broil for 3 minutes until the edges blacken in spots. Rest the chicken for 5 minutes, then slice thinly.',
+        tip: 'The charred bits are what make it taste like it came off a spit — don\'t skip the broil.'
+      },
+      {
+        title: 'Make the tahini sauce',
+        text: 'While the chicken roasts, whisk the tahini, yogurt, lemon juice, garlic and salt. Whisk in water a spoonful at a time until it\'s pourable.',
+        tip: 'Tahini seizes up and looks curdled at first — keep whisking and it turns silky.'
+      },
+      {
+        title: 'Warm the pitas',
+        text: 'Warm the pitas in a dry skillet for 30 seconds per side.'
+      },
+      {
+        title: 'Assemble',
+        text: 'Pile the chicken into the pitas with tomato, cucumber, red onion, parsley and pickled turnips, and drizzle generously with tahini sauce.'
+      }
+    ],
+    notes: [
+      'Make it a bowl: serve over rice or salad greens with the same toppings.',
+      'Leftover chicken reheats well in a hot skillet, which re-crisps the edges.'
+    ]
+  },
+  {
+    id: 'falafel',
+    name: 'Falafel with Tahini Sauce',
+    nativeName: 'فلافل',
+    short: 'Falafel',
+    region: 'Middle Eastern',
+    cuisine: 'Levantine · Egyptian',
+    emoji: '🧆',
+    description:
+      'Crisp, deep-golden falafel with a fluffy, bright-green herb interior, made the proper way from soaked (never canned) chickpeas, with lemony tahini sauce for dipping.',
+    servings: 4,
+    time: { prep: 30, cook: 20, inactive: 720, inactiveLabel: 'soak chickpeas' },
+    heat: 0,
+    tags: ['vegan', 'vegetarian', 'fried', 'wraps'],
+    ingredients: [
+      { group: 'Falafel', qty: 1, unit: 'cup', item: 'dried chickpeas', note: 'not canned', aisle: 'pantry' },
+      { group: 'Falafel', qty: 0.5, item: 'yellow onion', note: 'roughly chopped', shop: 'yellow onions', aisle: 'produce' },
+      { group: 'Falafel', qty: 4, item: 'garlic cloves', aisle: 'produce' },
+      { group: 'Falafel', qty: 1, unit: 'cup', item: 'flat-leaf parsley', note: 'leaves and tender stems', aisle: 'produce' },
+      { group: 'Falafel', qty: 1, unit: 'cup', item: 'cilantro', note: 'leaves and tender stems', aisle: 'produce' },
+      { group: 'Falafel', qty: 2, unit: 'tsp', item: 'ground cumin', aisle: 'spices' },
+      { group: 'Falafel', qty: 1, unit: 'tsp', item: 'ground coriander', aisle: 'spices' },
+      { group: 'Falafel', qty: 0.25, unit: 'tsp', item: 'cayenne pepper', aisle: 'spices' },
+      { group: 'Falafel', qty: 1.5, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Falafel', qty: 0.5, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'Falafel', qty: 1, unit: 'tsp', item: 'baking powder', aisle: 'pantry' },
+      { group: 'Falafel', qty: 2, unit: 'tbsp', item: 'all-purpose flour', note: 'only if the mix is crumbly', optional: true, aisle: 'pantry' },
+      { group: 'Falafel', qty: 4, unit: 'cup', item: 'vegetable oil', note: 'for frying', aisle: 'pantry' },
+      { group: 'Tahini sauce', qty: 0.33, unit: 'cup', item: 'tahini', aisle: 'international' },
+      { group: 'Tahini sauce', qty: 1, item: 'lemons', note: 'juiced', aisle: 'produce' },
+      { group: 'Tahini sauce', qty: 1, item: 'garlic cloves', note: 'grated', aisle: 'produce' },
+      { group: 'Tahini sauce', qty: 0.25, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Tahini sauce', qty: 0.33, unit: 'cup', item: 'ice water', aisle: 'none' },
+      { group: 'To serve', qty: 4, item: 'pita breads', aisle: 'bakery' },
+      { group: 'To serve', qty: 2, item: 'Roma tomatoes', note: 'diced', aisle: 'produce' },
+      { group: 'To serve', qty: 1, item: 'cucumber', note: 'diced', shop: 'cucumbers', aisle: 'produce' },
+      { group: 'To serve', item: 'pickled turnips', optional: true, aisle: 'international' }
+    ],
+    steps: [
+      {
+        title: 'Soak the chickpeas',
+        text: 'Cover the dried chickpeas with plenty of cold water (they triple in size) and soak for at least 12 hours. Drain and pat them very dry.',
+        tip: 'Canned or cooked chickpeas make falafel that falls apart in the oil — soaked raw chickpeas are the secret.'
+      },
+      {
+        title: 'Grind the mix',
+        text: 'Pulse the chickpeas, onion, garlic, parsley, cilantro, spices, salt and pepper in a food processor, scraping down the sides, until finely ground like coarse sand. Stop before it turns into a paste.'
+      },
+      {
+        title: 'Chill',
+        text: 'Transfer to a bowl, cover and refrigerate for 1 hour so the mixture firms up.'
+      },
+      {
+        title: 'Make the tahini sauce',
+        text: 'Whisk the tahini, lemon juice, garlic and salt, then whisk in the ice water a little at a time until smooth and creamy.'
+      },
+      {
+        title: 'Shape',
+        text: 'Stir the baking powder into the chilled mix. Squeeze a little in your hand: if it won\'t hold together, add the flour. Shape into balls or small patties of about 1½ tablespoons each.'
+      },
+      {
+        title: 'Fry',
+        text: 'Heat 2 inches of oil in a heavy pot to 350°F. Fry the falafel in batches without crowding for 4 minutes, turning once, until deep golden brown. Drain on a rack and sprinkle with salt.',
+        tip: 'Fry one test falafel first — if it crumbles, mix more flour into the batch.'
+      },
+      {
+        title: 'Serve',
+        text: 'Tuck the falafel into pitas with tomato, cucumber, pickled turnips and lots of tahini sauce, or serve them on a platter with hummus.'
+      }
+    ],
+    notes: [
+      'Shaped, uncooked falafel freeze well — fry them straight from frozen, adding a minute.',
+      'Air fryer: brush with oil and cook at 375°F for 12–14 minutes, flipping halfway.'
+    ]
+  },
 
   // ──────────────────────────── Latin American ───────────────────────────
   {
@@ -837,6 +985,132 @@ window.RECIPES = [
       'The braised meat and consommé freeze well for up to 3 months.'
     ]
   },
+  {
+    id: 'carnitas',
+    name: 'Pork Carnitas',
+    short: 'Carnitas',
+    region: 'Latin American',
+    cuisine: 'Mexican · Michoacán',
+    emoji: '🐷',
+    description:
+      'Pork shoulder slowly braised with orange, garlic and oregano until meltingly tender, then crisped under the broiler in its own fat. Juicy inside, crackly outside.',
+    servings: 6,
+    time: { prep: 20, cook: 200 },
+    heat: 0,
+    tags: ['pork', 'tacos', 'braise', 'make-ahead'],
+    ingredients: [
+      { group: 'Carnitas', qty: 4, unit: 'lb', item: 'boneless pork shoulder', note: 'cut into 2-inch chunks', aisle: 'meat' },
+      { group: 'Carnitas', qty: 1, unit: 'tbsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Carnitas', qty: 1, unit: 'tsp', item: 'ground cumin', aisle: 'spices' },
+      { group: 'Carnitas', qty: 2, unit: 'tsp', item: 'dried Mexican oregano', aisle: 'spices' },
+      { group: 'Carnitas', qty: 1, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'Carnitas', qty: 1, item: 'orange', note: 'halved', shop: 'oranges', aisle: 'produce' },
+      { group: 'Carnitas', qty: 1, item: 'white onion', note: 'halved', shop: 'white onions', aisle: 'produce' },
+      { group: 'Carnitas', qty: 6, item: 'garlic cloves', note: 'smashed', aisle: 'produce' },
+      { group: 'Carnitas', qty: 2, item: 'bay leaves', aisle: 'spices' },
+      { group: 'Carnitas', qty: 0.25, unit: 'cup', item: 'lard', note: 'or vegetable oil', aisle: 'meat' },
+      { group: 'Carnitas', qty: 1, unit: 'cup', item: 'water', aisle: 'none' },
+      { group: 'Tacos', qty: 18, item: 'corn tortillas', aisle: 'bakery' },
+      { group: 'Tacos', qty: 0.5, item: 'white onion', note: 'finely chopped', shop: 'white onions', aisle: 'produce' },
+      { group: 'Tacos', qty: 0.5, unit: 'cup', item: 'cilantro', note: 'chopped', aisle: 'produce' },
+      { group: 'Tacos', qty: 1, unit: 'cup', item: 'salsa verde', aisle: 'international' },
+      { group: 'Tacos', qty: 2, item: 'limes', note: 'cut into wedges', aisle: 'produce' },
+      { group: 'Tacos', qty: 1, unit: 'bunch', item: 'radishes', note: 'thinly sliced', optional: true, aisle: 'produce' }
+    ],
+    steps: [
+      {
+        title: 'Season the pork',
+        text: 'Heat the oven to 300°F. Toss the pork with the salt, cumin, oregano and pepper.'
+      },
+      {
+        title: 'Load the pot',
+        text: 'Pack the pork into a Dutch oven in a snug layer. Squeeze the orange halves over it and tuck in the squeezed halves, the onion, garlic and bay leaves. Add the lard and water.'
+      },
+      {
+        title: 'Braise',
+        text: 'Bring to a simmer on the stove, then cover and transfer to the oven. Braise for 3 hours, until the pork falls apart when prodded with a fork.'
+      },
+      {
+        title: 'Shred & save the fat',
+        text: 'Lift out the pork and discard the orange, onion and bay leaves. Skim the fat from the liquid into a cup. Pull the pork into large, chunky shreds.'
+      },
+      {
+        title: 'Crisp',
+        text: 'Heat the broiler. Spread the pork on a sheet pan, drizzle with 3 tbsp of the reserved fat and a splash of braising liquid, and broil for 5 minutes until the edges crisp. Toss and broil for 3 minutes more.',
+        tip: 'For the crunchiest carnitas, crisp them in batches in a hot cast-iron skillet with a spoonful of the fat instead.'
+      },
+      {
+        title: 'Serve',
+        text: 'Warm the tortillas and fill them with carnitas, chopped onion, cilantro, salsa verde, radishes and a squeeze of lime.'
+      }
+    ],
+    notes: [
+      'Store the braised (uncrisped) pork in its liquid for up to 5 days, then crisp just before serving.',
+      'Also great in burritos, nachos, or over rice with black beans.'
+    ]
+  },
+  {
+    id: 'lomo-saltado',
+    name: 'Lomo Saltado',
+    short: 'Lomo saltado',
+    region: 'Latin American',
+    cuisine: 'Peruvian · Chifa',
+    emoji: '🍟',
+    description:
+      'Peru\'s beloved Chinese-Peruvian stir-fry: smoky wok-seared beef, red onion and tomato in a tangy soy-vinegar sauce with ají amarillo, tossed with crisp fries and served with rice.',
+    servings: 4,
+    time: { prep: 20, cook: 25 },
+    heat: 1,
+    tags: ['beef', 'stir-fry', 'weeknight'],
+    ingredients: [
+      { group: 'Beef', qty: 1.5, unit: 'lb', item: 'beef sirloin', note: 'cut into ½-inch-thick strips', aisle: 'meat' },
+      { group: 'Beef', qty: 1, unit: 'tbsp', item: 'soy sauce', aisle: 'international' },
+      { group: 'Beef', qty: 4, item: 'garlic cloves', note: 'minced', aisle: 'produce' },
+      { group: 'Beef', qty: 0.5, unit: 'tsp', item: 'ground cumin', aisle: 'spices' },
+      { group: 'Beef', qty: 0.5, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Beef', qty: 0.5, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'Sauce', qty: 2, unit: 'tbsp', item: 'soy sauce', aisle: 'international' },
+      { group: 'Sauce', qty: 2, unit: 'tbsp', item: 'red wine vinegar', aisle: 'pantry' },
+      { group: 'Sauce', qty: 1, unit: 'tbsp', item: 'ají amarillo paste', note: 'or 1 seeded, minced jalapeño', aisle: 'international' },
+      { group: 'Stir-fry', qty: 3, unit: 'tbsp', item: 'vegetable oil', note: 'divided', aisle: 'pantry', staple: true },
+      { group: 'Stir-fry', qty: 1, item: 'red onion', note: 'cut into thick wedges', shop: 'red onions', aisle: 'produce' },
+      { group: 'Stir-fry', qty: 3, item: 'Roma tomatoes', note: 'cut into wedges', aisle: 'produce' },
+      { group: 'Stir-fry', qty: 0.5, unit: 'cup', item: 'cilantro', note: 'chopped', aisle: 'produce' },
+      { group: 'To serve', qty: 1, unit: 'lb', item: 'frozen french fries', note: 'or homemade', aisle: 'frozen' },
+      { group: 'To serve', qty: 1.5, unit: 'cup', item: 'long-grain white rice', note: 'uncooked', aisle: 'pantry' }
+    ],
+    steps: [
+      {
+        title: 'Start the fries & rice',
+        text: 'Bake the fries according to the package and cook the rice, so both are ready when the stir-fry is. The stir-fry itself goes very fast.'
+      },
+      {
+        title: 'Season the beef',
+        text: 'Toss the beef with 1 tbsp soy sauce, the garlic, cumin, salt and pepper. Let it sit for 15 minutes.'
+      },
+      {
+        title: 'Mix the sauce',
+        text: 'Whisk together the remaining 2 tbsp soy sauce, the vinegar and the ají amarillo paste.'
+      },
+      {
+        title: 'Sear the beef',
+        text: 'Heat a wok or your largest skillet over the highest heat until smoking. Add 1 tbsp oil and half the beef in a single layer; sear for 2 minutes, tossing once, until browned outside and pink inside. Remove and repeat with another 1 tbsp oil and the rest of the beef.',
+        tip: 'Real smoking heat and small batches are what give lomo saltado its smoky "wok hei".'
+      },
+      {
+        title: 'Onion & tomato',
+        text: 'Add the last 1 tbsp oil and the onion; stir-fry for 1 minute until charred at the edges but still crisp. Add the tomatoes and toss for 1 minute, just until they start to soften.'
+      },
+      {
+        title: 'Bring it together',
+        text: 'Return the beef and its juices, pour in the sauce, and toss for 30 seconds. Take the pan off the heat, fold in the hot fries and cilantro, and serve immediately with rice.'
+      }
+    ],
+    notes: [
+      'Add the fries at the very last second so they soak up sauce without going soggy.',
+      'Ají amarillo paste is in the Latin aisle or online — it adds fruity heat that\'s hard to substitute.'
+    ]
+  },
 
   // ───────────────────────────── Mediterranean ───────────────────────────
   {
@@ -905,6 +1179,67 @@ window.RECIPES = [
     notes: [
       'Tzatziki keeps 4 days in the fridge and gets more garlicky as it sits.',
       'Make it a plate: serve with Greek salad, rice pilaf or lemon potatoes.'
+    ]
+  },
+  {
+    id: 'shrimp-saganaki',
+    name: 'Shrimp Saganaki',
+    nativeName: 'Γαρίδες Σαγανάκι',
+    short: 'Saganaki',
+    region: 'Mediterranean',
+    cuisine: 'Greek',
+    emoji: '🦐',
+    description:
+      'Plump shrimp baked in a garlicky white-wine tomato sauce under a blanket of melting feta. A taverna favorite that comes together in under an hour; bring lots of bread.',
+    servings: 4,
+    time: { prep: 15, cook: 30 },
+    heat: 1,
+    tags: ['seafood', 'shrimp', 'one-pan', 'weeknight'],
+    ingredients: [
+      { qty: 3, unit: 'tbsp', item: 'olive oil', note: 'plus more to finish', aisle: 'pantry', staple: true },
+      { qty: 2, item: 'shallots', note: 'finely chopped', aisle: 'produce' },
+      { qty: 4, item: 'garlic cloves', note: 'thinly sliced', aisle: 'produce' },
+      { qty: 0.5, unit: 'tsp', item: 'red pepper flakes', aisle: 'spices' },
+      { qty: 0.5, unit: 'cup', item: 'dry white wine', note: 'such as Assyrtiko or Sauvignon Blanc', aisle: 'other' },
+      { qty: 14, unit: 'oz', item: 'canned crushed tomatoes', note: '1 can', aisle: 'pantry' },
+      { qty: 1, unit: 'tsp', item: 'dried oregano', aisle: 'spices' },
+      { qty: 0.5, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { qty: 1.5, unit: 'lb', item: 'large shrimp', note: 'peeled and deveined, tails on', aisle: 'seafood' },
+      { qty: 4, unit: 'oz', item: 'feta', note: 'crumbled', aisle: 'dairy' },
+      { qty: 0.25, unit: 'cup', item: 'flat-leaf parsley', note: 'chopped', aisle: 'produce' },
+      { qty: 0.5, item: 'lemon', note: 'cut into wedges', shop: 'lemons', aisle: 'produce' },
+      { qty: 1, item: 'loaf crusty bread', aisle: 'bakery' }
+    ],
+    steps: [
+      {
+        title: 'Soften the aromatics',
+        text: 'Heat the oven to 400°F. Warm the oil in a 10- to 12-inch ovenproof skillet over medium heat. Cook the shallots for 3 minutes until soft, then add the garlic and pepper flakes and cook for 1 minute.'
+      },
+      {
+        title: 'Reduce the wine',
+        text: 'Pour in the wine and simmer for 2 minutes, until reduced by about half.'
+      },
+      {
+        title: 'Simmer the sauce',
+        text: 'Add the tomatoes, oregano and salt. Simmer for 10 minutes, stirring now and then, until thickened.'
+      },
+      {
+        title: 'Add shrimp & feta',
+        text: 'Nestle the shrimp into the sauce in a single layer and scatter the feta over the top.'
+      },
+      {
+        title: 'Bake',
+        text: 'Bake for 10 minutes, until the shrimp are pink and curled and the feta is soft and starting to brown.',
+        tip: 'For a golden top, run it under the broiler for the last minute or two — watch it closely.'
+      },
+      {
+        title: 'Serve',
+        text: 'Scatter with parsley, drizzle with a little olive oil, and serve straight from the pan with lemon wedges and bread for the sauce.'
+      }
+    ],
+    notes: [
+      'Also great tossed with orzo or spaghetti.',
+      'Frozen shrimp work well; thaw them in cold water and pat dry first.'
     ]
   },
 
@@ -982,6 +1317,148 @@ window.RECIPES = [
       'Vegetarian: use vegetable stock and vegetable bouillon.'
     ]
   },
+  {
+    id: 'chicken-tagine',
+    name: 'Chicken Tagine with Preserved Lemon & Olives',
+    nativeName: 'Djej Mqualli',
+    short: 'Tagine',
+    region: 'African',
+    cuisine: 'North African · Moroccan',
+    emoji: '🏺',
+    description:
+      'Golden, saffron-tinged chicken braised with soft onions, warm spices, briny olives and fragrant preserved lemon. Serve it with fluffy couscous to soak up the sauce.',
+    servings: 4,
+    time: { prep: 20, cook: 75 },
+    heat: 0,
+    tags: ['chicken', 'braise', 'one-pot'],
+    ingredients: [
+      { group: 'Chicken', qty: 3, unit: 'lb', item: 'bone-in skin-on chicken thighs', note: 'about 8', aisle: 'meat' },
+      { group: 'Chicken', qty: 1, unit: 'tsp', item: 'ground ginger', aisle: 'spices' },
+      { group: 'Chicken', qty: 1, unit: 'tsp', item: 'ground turmeric', aisle: 'spices' },
+      { group: 'Chicken', qty: 1, unit: 'tsp', item: 'sweet paprika', aisle: 'spices' },
+      { group: 'Chicken', qty: 1, unit: 'tsp', item: 'ground cumin', aisle: 'spices' },
+      { group: 'Chicken', qty: 0.5, unit: 'tsp', item: 'ground cinnamon', aisle: 'spices' },
+      { group: 'Chicken', item: 'saffron threads', note: 'a generous pinch', optional: true, aisle: 'spices' },
+      { group: 'Chicken', qty: 1.5, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Chicken', qty: 0.5, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'Braise', qty: 2, unit: 'tbsp', item: 'olive oil', aisle: 'pantry', staple: true },
+      { group: 'Braise', qty: 2, item: 'yellow onions', note: 'thinly sliced', aisle: 'produce' },
+      { group: 'Braise', qty: 4, item: 'garlic cloves', note: 'minced', aisle: 'produce' },
+      { group: 'Braise', qty: 1, unit: 'cup', item: 'chicken stock', aisle: 'pantry' },
+      { group: 'Braise', qty: 1, item: 'preserved lemon', note: 'flesh discarded, rind thinly sliced', aisle: 'international' },
+      { group: 'Braise', qty: 0.75, unit: 'cup', item: 'green olives', note: 'such as picholine or Castelvetrano', aisle: 'pantry' },
+      { group: 'To serve', qty: 0.25, unit: 'cup', item: 'cilantro', note: 'chopped', aisle: 'produce' },
+      { group: 'To serve', qty: 0.25, unit: 'cup', item: 'flat-leaf parsley', note: 'chopped', aisle: 'produce' },
+      { group: 'To serve', qty: 1.5, unit: 'cup', item: 'couscous', aisle: 'pantry' },
+      { group: 'To serve', qty: 1.5, unit: 'cup', item: 'boiling water', note: 'for the couscous', aisle: 'none' }
+    ],
+    steps: [
+      {
+        title: 'Spice the chicken',
+        text: 'Mix the ginger, turmeric, paprika, cumin, cinnamon, salt and pepper, and crumble in the saffron. Rub it all over the chicken.',
+        tip: 'If you have time, let the spiced chicken sit in the fridge for a few hours or overnight.'
+      },
+      {
+        title: 'Brown the chicken',
+        text: 'Heat the oil in a tagine or Dutch oven over medium-high heat. Brown the chicken skin side down for 6 minutes until golden, flip for 2 minutes, then set aside.'
+      },
+      {
+        title: 'Cook the onions',
+        text: 'Pour off all but about 2 tbsp of fat. Lower the heat to medium and cook the onions for 10 minutes, stirring, until soft and golden. Add the garlic and cook for 1 minute.'
+      },
+      {
+        title: 'Braise',
+        text: 'Pour in the stock and scrape up the browned bits. Nestle the chicken in skin side up, cover, and simmer on low for 40 minutes.'
+      },
+      {
+        title: 'Add lemon & olives',
+        text: 'Scatter in the preserved lemon and olives. Simmer uncovered for 10 minutes so the sauce reduces and thickens.'
+      },
+      {
+        title: 'Make the couscous',
+        text: 'Pour the boiling water over the couscous with a pinch of salt and a drizzle of oil. Cover and let stand for 5 minutes, then fluff with a fork.'
+      },
+      {
+        title: 'Serve',
+        text: 'Taste the sauce for salt, shower the tagine with cilantro and parsley, and serve over the couscous.'
+      }
+    ],
+    notes: [
+      'No preserved lemon? Use the zest of 1 lemon plus a squeeze of juice at the end.',
+      'Tastes even better the next day.'
+    ]
+  },
+  {
+    id: 'doro-wat',
+    name: 'Doro Wat',
+    nativeName: 'ዶሮ ወጥ',
+    short: 'Doro wat',
+    region: 'African',
+    cuisine: 'East African · Ethiopian',
+    emoji: '🍲',
+    description:
+      'Ethiopia\'s celebration stew: chicken and hard-boiled eggs simmered in a deep, slow-cooked red-onion sauce rich with berbere spice and spiced butter. Traditionally scooped up with injera.',
+    servings: 6,
+    time: { prep: 25, cook: 110 },
+    heat: 2,
+    tags: ['chicken', 'stew', 'spicy', 'eggs'],
+    ingredients: [
+      { group: 'Chicken', qty: 3, unit: 'lb', item: 'bone-in chicken drumsticks and thighs', note: 'skin removed', aisle: 'meat' },
+      { group: 'Chicken', qty: 1, item: 'lemons', note: 'juiced', aisle: 'produce' },
+      { group: 'Chicken', qty: 1, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Spiced butter', qty: 6, unit: 'tbsp', item: 'unsalted butter', note: 'or niter kibbeh', aisle: 'dairy' },
+      { group: 'Spiced butter', qty: 0.25, unit: 'tsp', item: 'ground cardamom', aisle: 'spices' },
+      { group: 'Spiced butter', qty: 0.25, unit: 'tsp', item: 'ground fenugreek', aisle: 'spices' },
+      { group: 'Stew', qty: 3, item: 'large red onions', note: 'very finely chopped', shop: 'red onions', aisle: 'produce' },
+      { group: 'Stew', qty: 6, item: 'garlic cloves', note: 'minced', aisle: 'produce' },
+      { group: 'Stew', qty: 1.5, unit: 'in', item: 'fresh ginger', note: 'grated', aisle: 'produce' },
+      { group: 'Stew', qty: 3, unit: 'tbsp', item: 'berbere spice', aisle: 'spices' },
+      { group: 'Stew', qty: 2, unit: 'tbsp', item: 'tomato paste', aisle: 'pantry' },
+      { group: 'Stew', qty: 1.5, unit: 'cup', item: 'chicken stock', aisle: 'pantry' },
+      { group: 'Stew', qty: 1, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Stew', qty: 6, item: 'eggs', aisle: 'dairy' },
+      { group: 'To serve', qty: 6, item: 'injera', note: 'or rice', aisle: 'bakery' }
+    ],
+    steps: [
+      {
+        title: 'Prep the chicken',
+        text: 'Make a few shallow cuts in each piece of chicken. Toss with the lemon juice and salt and set aside for 30 minutes.'
+      },
+      {
+        title: 'Spice the butter',
+        text: 'Melt the butter with the cardamom and fenugreek over low heat for 5 minutes until fragrant. Set aside.'
+      },
+      {
+        title: 'Dry-cook the onions',
+        text: 'Put the onions in a heavy, dry pot over medium-low heat with no fat. Cook for 20 minutes, stirring often, until they shrink, turn jammy and begin to color. Add a splash of water if they start to stick.',
+        tip: 'Cooking the onions dry before adding fat is the traditional technique — it gives the sauce its body and sweetness.'
+      },
+      {
+        title: 'Butter & aromatics',
+        text: 'Stir in half the spiced butter, the garlic and ginger, and cook for 5 minutes.'
+      },
+      {
+        title: 'Bloom the berbere',
+        text: 'Add the berbere and tomato paste and cook for 5 minutes, stirring constantly and adding a splash of stock if it sticks, until it turns a deep brick red.'
+      },
+      {
+        title: 'Simmer the chicken',
+        text: 'Add the remaining butter, the stock and salt. Nestle in the chicken, bring to a simmer, then cover and cook on low for 45 minutes, turning the pieces now and then, until very tender.'
+      },
+      {
+        title: 'Boil the eggs',
+        text: 'Meanwhile, simmer the eggs for 10 minutes, cool them in ice water, and peel. Cut a few shallow slits in each so they soak up the sauce.'
+      },
+      {
+        title: 'Finish',
+        text: 'Add the eggs to the stew and simmer uncovered for 15 minutes, until the sauce is thick and the eggs are stained red. Serve with injera.'
+      }
+    ],
+    notes: [
+      'Berbere and injera are sold at Ethiopian and international markets, and berbere is easy to find online.',
+      'Like most stews, doro wat is even better the next day.'
+    ]
+  },
 
   // ─────────────────────────────── European ──────────────────────────────
   {
@@ -1040,6 +1517,291 @@ window.RECIPES = [
     notes: [
       'Carbonara waits for no one — have everyone seated before you toss the sauce.',
       'Guanciale (cured pork jowl) is worth seeking out at Italian delis; thick-cut pancetta is the best substitute.'
+    ]
+  },
+  {
+    id: 'coq-au-vin',
+    name: 'Coq au Vin',
+    short: 'Coq au vin',
+    region: 'European',
+    cuisine: 'French · Burgundy',
+    emoji: '🍷',
+    description:
+      'Chicken braised in red wine with bacon, mushrooms and pearl onions until tender, in a glossy, deeply savory sauce. Classic French comfort that tastes better the next day.',
+    servings: 6,
+    time: { prep: 30, cook: 120 },
+    heat: 0,
+    tags: ['chicken', 'braise', 'wine', 'dinner party'],
+    ingredients: [
+      { group: 'Braise', qty: 6, unit: 'oz', item: 'thick-cut bacon', note: 'cut into ½-inch pieces (or lardons)', aisle: 'meat' },
+      { group: 'Braise', qty: 3.5, unit: 'lb', item: 'bone-in skin-on chicken thighs', note: 'or a mix of thighs and drumsticks', aisle: 'meat' },
+      { group: 'Braise', qty: 2, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Braise', qty: 1, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'Braise', qty: 1, item: 'yellow onions', note: 'diced', aisle: 'produce' },
+      { group: 'Braise', qty: 2, item: 'carrots', note: 'diced', aisle: 'produce' },
+      { group: 'Braise', qty: 4, item: 'garlic cloves', note: 'minced', aisle: 'produce' },
+      { group: 'Braise', qty: 1, unit: 'tbsp', item: 'tomato paste', aisle: 'pantry' },
+      { group: 'Braise', qty: 2, unit: 'tbsp', item: 'all-purpose flour', aisle: 'pantry' },
+      { group: 'Braise', qty: 2, unit: 'tbsp', item: 'brandy or cognac', optional: true, aisle: 'other' },
+      { group: 'Braise', qty: 750, unit: 'ml', item: 'dry red wine', note: '1 bottle, Pinot Noir or Burgundy', aisle: 'other' },
+      { group: 'Braise', qty: 1, unit: 'cup', item: 'chicken stock', aisle: 'pantry' },
+      { group: 'Braise', qty: 4, unit: 'sprig', item: 'fresh thyme', aisle: 'produce' },
+      { group: 'Braise', qty: 2, item: 'bay leaves', aisle: 'spices' },
+      { group: 'Garnish', qty: 3, unit: 'tbsp', item: 'unsalted butter', aisle: 'dairy' },
+      { group: 'Garnish', qty: 8, unit: 'oz', item: 'cremini mushrooms', note: 'quartered', aisle: 'produce' },
+      { group: 'Garnish', qty: 10, unit: 'oz', item: 'frozen pearl onions', note: 'thawed', aisle: 'frozen' },
+      { group: 'Garnish', qty: 0.25, unit: 'cup', item: 'flat-leaf parsley', note: 'chopped', aisle: 'produce' },
+      { group: 'To serve', qty: 1, item: 'loaf crusty bread', note: 'or mashed potatoes or egg noodles', aisle: 'bakery' }
+    ],
+    steps: [
+      {
+        title: 'Season the chicken',
+        text: 'Heat the oven to 325°F. Pat the chicken very dry and season all over with the salt and pepper.'
+      },
+      {
+        title: 'Crisp the bacon',
+        text: 'Cook the bacon in a large Dutch oven over medium heat for 8 minutes until crisp. Scoop it out, leaving the fat behind.'
+      },
+      {
+        title: 'Brown the chicken',
+        text: 'Raise the heat to medium-high. Brown the chicken skin side down in batches for 6 minutes until deep golden, flip for 3 minutes, and set aside.',
+        tip: 'Don\'t crowd the pot — well-browned skin is where much of the flavor comes from.'
+      },
+      {
+        title: 'Build the base',
+        text: 'Pour off all but 2 tbsp of fat. Cook the onion and carrots for 5 minutes until softened. Add the garlic and tomato paste for 1 minute, then sprinkle in the flour and stir for 1 minute more.'
+      },
+      {
+        title: 'Deglaze',
+        text: 'Off the heat, add the brandy (if using) and scrape up the browned bits. Pour in the wine and stock, add the thyme and bay leaves, and bring to a boil.'
+      },
+      {
+        title: 'Braise',
+        text: 'Return the chicken and bacon to the pot, skin side up and above the liquid. Cover and braise in the oven for 1 hour, until the chicken is very tender.'
+      },
+      {
+        title: 'Brown the garnish',
+        text: 'Meanwhile, melt the butter in a skillet over medium-high heat. Cook the mushrooms and pearl onions for 10 minutes, stirring now and then, until browned. Season with a pinch of salt.'
+      },
+      {
+        title: 'Reduce the sauce',
+        text: 'Lift the chicken onto a plate. Discard the thyme and bay leaves and boil the sauce on the stove for 10 minutes, until it coats the back of a spoon.'
+      },
+      {
+        title: 'Finish & serve',
+        text: 'Stir in the mushrooms and onions, return the chicken, and scatter with parsley. Serve with crusty bread, mashed potatoes or buttered egg noodles.'
+      }
+    ],
+    notes: [
+      'Cook with a wine you would happily drink; there\'s no need for an expensive bottle.',
+      'Make it a day ahead: refrigerate, lift off the fat, and reheat gently.'
+    ]
+  },
+  {
+    id: 'hungarian-goulash',
+    name: 'Hungarian Beef Goulash',
+    nativeName: 'Gulyás',
+    short: 'Goulash',
+    region: 'European',
+    cuisine: 'Hungarian',
+    emoji: '🥣',
+    description:
+      'The real Hungarian goulash: a brothy, paprika-red stew of tender beef, slow-cooked onions, peppers, potatoes and caraway. Warming, simple and deeply flavorful.',
+    servings: 6,
+    time: { prep: 25, cook: 150 },
+    heat: 1,
+    tags: ['beef', 'stew', 'soup', 'winter'],
+    ingredients: [
+      { qty: 2, unit: 'tbsp', item: 'lard', note: 'or vegetable oil', aisle: 'meat' },
+      { qty: 3, item: 'large yellow onions', note: 'diced', shop: 'yellow onions', aisle: 'produce' },
+      { qty: 2.5, unit: 'lb', item: 'beef chuck roast', note: 'cut into 1-inch cubes', aisle: 'meat' },
+      { qty: 3, unit: 'tbsp', item: 'sweet paprika', note: 'Hungarian, and fresh', aisle: 'spices' },
+      { qty: 1, unit: 'tsp', item: 'caraway seeds', note: 'lightly crushed', aisle: 'spices' },
+      { qty: 4, item: 'garlic cloves', note: 'minced', aisle: 'produce' },
+      { qty: 1, unit: 'tbsp', item: 'tomato paste', aisle: 'pantry' },
+      { qty: 2, item: 'red bell peppers', note: 'diced', aisle: 'produce' },
+      { qty: 2, item: 'Roma tomatoes', note: 'diced', aisle: 'produce' },
+      { qty: 6, unit: 'cup', item: 'beef stock', aisle: 'pantry' },
+      { qty: 2, item: 'bay leaves', aisle: 'spices' },
+      { qty: 2, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { qty: 0.5, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { qty: 1.5, unit: 'lb', item: 'Yukon Gold potatoes', note: 'cut into 1-inch chunks', aisle: 'produce' },
+      { qty: 2, item: 'carrots', note: 'sliced', aisle: 'produce' },
+      { qty: 0.5, unit: 'cup', item: 'sour cream', note: 'to serve', optional: true, aisle: 'dairy' },
+      { qty: 1, item: 'loaf crusty bread', aisle: 'bakery' }
+    ],
+    steps: [
+      {
+        title: 'Cook the onions slowly',
+        text: 'Melt the lard in a large Dutch oven over medium heat. Cook the onions for 12 minutes, stirring, until soft and golden.',
+        tip: 'Slow-cooked onions melt into the broth and give goulash its body.'
+      },
+      {
+        title: 'Brown the beef',
+        text: 'Raise the heat to medium-high, add the beef, and cook for 8 minutes, stirring, until it loses its raw color all over.'
+      },
+      {
+        title: 'Paprika off the heat',
+        text: 'Take the pot off the heat. Stir in the paprika, caraway, garlic and tomato paste for 30 seconds until everything is coated and brick red.',
+        tip: 'Paprika burns and turns bitter in seconds over direct heat, so always add it off the burner.'
+      },
+      {
+        title: 'Simmer',
+        text: 'Return the pot to the heat and add the peppers, tomatoes, stock, bay leaves, salt and pepper. Bring to a boil, then cover and simmer on low for 1.5 hours.'
+      },
+      {
+        title: 'Add potatoes & carrots',
+        text: 'Add the potatoes and carrots and simmer uncovered for 30 minutes, until they\'re tender and the beef falls apart easily.'
+      },
+      {
+        title: 'Serve',
+        text: 'Taste for salt and remove the bay leaves. Ladle into bowls with a dollop of sour cream and plenty of bread.'
+      }
+    ],
+    notes: [
+      'Paprika loses its flavor fast; buy a fresh tin of Hungarian sweet paprika for this.',
+      'For a thicker stew (closer to pörkölt), use 3 cups of stock and skip the potatoes.'
+    ]
+  },
+
+  // ─────────────────────────────── Caribbean ─────────────────────────────
+  {
+    id: 'jerk-chicken',
+    name: 'Jerk Chicken',
+    short: 'Jerk chicken',
+    region: 'Caribbean',
+    cuisine: 'Jamaican',
+    emoji: '🔥',
+    description:
+      'Chicken soaked in a fiery, aromatic marinade of scotch bonnets, scallions, allspice and thyme, then roasted or grilled until charred and sticky. Bold, smoky and hot.',
+    servings: 6,
+    time: { prep: 20, cook: 50, inactive: 240, inactiveLabel: 'marinate' },
+    heat: 3,
+    tags: ['chicken', 'grilled', 'spicy', 'summer'],
+    ingredients: [
+      { group: 'Jerk marinade', qty: 6, item: 'scallions', note: 'roughly chopped', aisle: 'produce' },
+      { group: 'Jerk marinade', qty: 3, item: 'scotch bonnet peppers', note: 'stemmed; seed some for less heat', aisle: 'produce' },
+      { group: 'Jerk marinade', qty: 0.5, item: 'yellow onion', note: 'roughly chopped', shop: 'yellow onions', aisle: 'produce' },
+      { group: 'Jerk marinade', qty: 6, item: 'garlic cloves', aisle: 'produce' },
+      { group: 'Jerk marinade', qty: 2, unit: 'in', item: 'fresh ginger', note: 'sliced', aisle: 'produce' },
+      { group: 'Jerk marinade', qty: 6, unit: 'sprig', item: 'fresh thyme', note: 'leaves only', aisle: 'produce' },
+      { group: 'Jerk marinade', qty: 1, unit: 'tbsp', item: 'ground allspice', aisle: 'spices' },
+      { group: 'Jerk marinade', qty: 1, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'Jerk marinade', qty: 0.5, unit: 'tsp', item: 'ground cinnamon', aisle: 'spices' },
+      { group: 'Jerk marinade', qty: 0.25, unit: 'tsp', item: 'ground nutmeg', aisle: 'spices' },
+      { group: 'Jerk marinade', qty: 2, unit: 'tbsp', item: 'brown sugar', aisle: 'pantry', staple: true },
+      { group: 'Jerk marinade', qty: 3, unit: 'tbsp', item: 'soy sauce', aisle: 'international' },
+      { group: 'Jerk marinade', qty: 2, item: 'limes', note: 'juiced', aisle: 'produce' },
+      { group: 'Jerk marinade', qty: 2, unit: 'tbsp', item: 'vegetable oil', aisle: 'pantry', staple: true },
+      { group: 'Jerk marinade', qty: 2, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Chicken', qty: 4, unit: 'lb', item: 'bone-in skin-on chicken thighs', note: 'or drumsticks', aisle: 'meat' },
+      { group: 'To serve', qty: 1, item: 'limes', note: 'cut into wedges', aisle: 'produce' },
+      { group: 'To serve', qty: 2, unit: 'cup', item: 'long-grain white rice', note: 'uncooked; or make rice and peas', aisle: 'pantry' }
+    ],
+    steps: [
+      {
+        title: 'Blend the marinade',
+        text: 'Blend every marinade ingredient until mostly smooth. It should be thick and pourable.',
+        tip: 'Wear gloves when handling scotch bonnets, and don\'t touch your eyes.'
+      },
+      {
+        title: 'Marinate',
+        text: 'Cut a few deep slashes in each piece of chicken, down to the bone. Rub the marinade into the cuts and all over, then cover and refrigerate for at least 4 hours, or overnight for the best flavor.'
+      },
+      {
+        title: 'Roast',
+        text: 'Heat the oven to 425°F. Arrange the chicken skin side up on a rack set over a foil-lined sheet pan. Roast for 40 minutes, until it reaches 175°F inside and is charred in spots.',
+        tip: 'To grill instead: cook over indirect medium heat with the lid closed until cooked through, then finish over direct heat to char.'
+      },
+      {
+        title: 'Char',
+        text: 'Broil for 3 minutes for extra-crispy, blackened edges.'
+      },
+      {
+        title: 'Rest & serve',
+        text: 'Rest the chicken for 5 minutes. Serve with lime wedges and rice.'
+      }
+    ],
+    notes: [
+      'Allspice (pimento) is the key flavor, so don\'t skip it.',
+      'The marinade keeps 1 week refrigerated and is also excellent on pork or shrimp.'
+    ]
+  },
+
+  // ──────────────────────────── North American ───────────────────────────
+  {
+    id: 'chicken-andouille-gumbo',
+    name: 'Chicken & Andouille Gumbo',
+    short: 'Gumbo',
+    region: 'North American',
+    cuisine: 'Cajun · Louisiana',
+    emoji: '🫕',
+    description:
+      'A Louisiana classic built on a dark, nutty roux and the "holy trinity" of onion, celery and pepper, simmered with chicken and smoky andouille sausage and served over rice.',
+    servings: 8,
+    time: { prep: 30, cook: 120 },
+    heat: 1,
+    tags: ['chicken', 'sausage', 'stew', 'crowd-pleaser'],
+    ingredients: [
+      { group: 'Meat', qty: 1, unit: 'lb', item: 'andouille sausage', note: 'sliced into ¼-inch coins', aisle: 'meat' },
+      { group: 'Meat', qty: 2, unit: 'lb', item: 'boneless skinless chicken thighs', note: 'cut into bite-size pieces', aisle: 'meat' },
+      { group: 'Meat', qty: 1, unit: 'tbsp', item: 'Cajun seasoning', aisle: 'spices' },
+      { group: 'Roux', qty: 0.75, unit: 'cup', item: 'vegetable oil', aisle: 'pantry' },
+      { group: 'Roux', qty: 0.75, unit: 'cup', item: 'all-purpose flour', aisle: 'pantry' },
+      { group: 'Trinity', qty: 1, item: 'large yellow onion', note: 'diced', shop: 'yellow onions', aisle: 'produce' },
+      { group: 'Trinity', qty: 1, item: 'green bell pepper', note: 'diced', shop: 'green bell peppers', aisle: 'produce' },
+      { group: 'Trinity', qty: 3, unit: 'stalk', item: 'celery', note: 'diced', aisle: 'produce' },
+      { group: 'Trinity', qty: 5, item: 'garlic cloves', note: 'minced', aisle: 'produce' },
+      { group: 'Gumbo', qty: 8, unit: 'cup', item: 'chicken stock', note: 'warmed', aisle: 'pantry' },
+      { group: 'Gumbo', qty: 1, unit: 'tsp', item: 'dried thyme', aisle: 'spices' },
+      { group: 'Gumbo', qty: 0.25, unit: 'tsp', item: 'cayenne pepper', aisle: 'spices' },
+      { group: 'Gumbo', qty: 3, item: 'bay leaves', aisle: 'spices' },
+      { group: 'Gumbo', qty: 1, unit: 'tsp', item: 'kosher salt', aisle: 'pantry', staple: true },
+      { group: 'Gumbo', qty: 0.5, unit: 'tsp', item: 'black pepper', aisle: 'pantry', staple: true },
+      { group: 'To serve', qty: 4, item: 'scallions', note: 'sliced', aisle: 'produce' },
+      { group: 'To serve', qty: 0.25, unit: 'cup', item: 'flat-leaf parsley', note: 'chopped', aisle: 'produce' },
+      { group: 'To serve', qty: 2, unit: 'cup', item: 'long-grain white rice', note: 'uncooked', aisle: 'pantry' },
+      { group: 'To serve', item: 'Louisiana hot sauce', note: 'for the table', aisle: 'pantry' },
+      { group: 'To serve', item: 'filé powder', note: 'for the table', optional: true, aisle: 'spices' }
+    ],
+    steps: [
+      {
+        title: 'Prep everything first',
+        text: 'Dice the trinity and garlic, slice the sausage, and toss the chicken with the Cajun seasoning. Warm the stock in a saucepan. Once you start the roux you can\'t walk away.'
+      },
+      {
+        title: 'Brown the meats',
+        text: 'In a large Dutch oven over medium heat, brown the sausage for 5 minutes and set aside. Brown the chicken for 6 minutes and set aside with the sausage.'
+      },
+      {
+        title: 'Make the roux',
+        text: 'Add the oil to the pot, then whisk in the flour. Stir constantly over medium to medium-low heat for 30 minutes, until the roux is the color of dark chocolate and smells nutty.',
+        tip: 'If you see black specks or smell burning, it\'s scorched. Start over, because burnt roux ruins the pot.'
+      },
+      {
+        title: 'Add the trinity',
+        text: 'Stir in the onion, bell pepper and celery (they stop the roux from darkening) and cook for 8 minutes until soft. Add the garlic for 1 minute.'
+      },
+      {
+        title: 'Add the stock',
+        text: 'Whisk in the warm stock one ladle at a time so it stays smooth. Add the thyme, cayenne, bay leaves, salt and pepper.'
+      },
+      {
+        title: 'Simmer',
+        text: 'Return the sausage and chicken, bring to a boil, then simmer uncovered for 1 hour, stirring now and then and skimming off any fat that rises.'
+      },
+      {
+        title: 'Cook the rice',
+        text: 'While the gumbo simmers, cook the rice according to the package.'
+      },
+      {
+        title: 'Serve',
+        text: 'Taste for salt and spice and remove the bay leaves. Stir in the scallions and parsley and ladle over rice. Pass the hot sauce and filé.'
+      }
+    ],
+    notes: [
+      'Gumbo is better the next day and freezes well (freeze it without the rice).',
+      'Add 1 lb peeled shrimp in the last 5 minutes for a seafood version.'
     ]
   }
 ];
