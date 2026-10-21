@@ -190,17 +190,54 @@
   function renderChips() {
     const chip = (action, key, value, label, on) =>
       `<button type="button" class="chip${on ? ' on' : ''}" data-action="${action}" data-${key}="${esc(value)}">${esc(label)}</button>`;
+    const row = (name, cls, label, chips) => `<div class="chip-scroller" data-row="${name}">
+        <button type="button" class="chip-arrow left" data-action="chip-scroll" data-dir="-1" aria-label="Scroll ${label} left" hidden>‹</button>
+        <div class="chips${cls}" role="group" aria-label="${label}">${chips}</div>
+        <button type="button" class="chip-arrow right" data-action="chip-scroll" data-dir="1" aria-label="Scroll ${label} right" hidden>›</button>
+      </div>`;
     const regions = ui.continent ? REGIONS_IN[ui.continent] : [];
-    $('#chips').innerHTML = `
-      <div class="chips" role="group" aria-label="Filter by continent">
-        ${chip('continent', 'continent', '', 'All', !ui.continent)}
-        ${CONTINENTS.map(c => chip('continent', 'continent', c, c, ui.continent === c)).join('')}
-      </div>
-      ${regions.length > 1 ? `<div class="chips sub" role="group" aria-label="Filter by region">
-        ${chip('region', 'region', '', `All ${ui.continent}`, !ui.region)}
-        ${regions.map(rg => chip('region', 'region', rg, rg, ui.region === rg)).join('')}
-      </div>` : ''}`;
+    // Keep each row's scroll position across re-renders so picking a chip doesn't jump back to the start.
+    const prev = {};
+    document.querySelectorAll('#chips .chip-scroller').forEach(s => { prev[s.dataset.row] = $('.chips', s).scrollLeft; });
+    $('#chips').innerHTML =
+      row('continent', '', 'Filter by continent',
+        chip('continent', 'continent', '', 'All', !ui.continent) +
+        CONTINENTS.map(c => chip('continent', 'continent', c, c, ui.continent === c)).join('')) +
+      (regions.length > 1 ? row(`region:${ui.continent}`, ' sub', 'Filter by region',
+        chip('region', 'region', '', `All ${ui.continent}`, !ui.region) +
+        regions.map(rg => chip('region', 'region', rg, rg, ui.region === rg)).join('')) : '');
+    document.querySelectorAll('#chips .chip-scroller').forEach(s => initScroller(s, prev[s.dataset.row]));
   }
+
+  // Horizontal chip rows: arrow buttons, mouse-wheel scrolling, and keeping the selected chip in view.
+  function initScroller(scroller, restoreLeft) {
+    const track = $('.chips', scroller);
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      $('.chip-arrow.left', scroller).hidden = track.scrollLeft <= 2;
+      $('.chip-arrow.right', scroller).hidden = track.scrollLeft >= max - 2;
+      scroller.classList.toggle('fade-left', track.scrollLeft > 2);
+      scroller.classList.toggle('fade-right', track.scrollLeft < max - 2);
+    };
+    if (restoreLeft) track.scrollLeft = restoreLeft;
+    const on = $('.chip.on', track);
+    if (on) {
+      const left = on.offsetLeft - track.offsetLeft, right = left + on.offsetWidth;
+      if (left < track.scrollLeft + 40) track.scrollLeft = left - 40;
+      else if (right > track.scrollLeft + track.clientWidth - 40) track.scrollLeft = right - track.clientWidth + 40;
+    }
+    track.addEventListener('scroll', update, { passive: true });
+    track.addEventListener('wheel', e => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      const max = track.scrollWidth - track.clientWidth;
+      // At either end, let the wheel scroll the page as usual.
+      if ((e.deltaY < 0 && track.scrollLeft <= 0) || (e.deltaY > 0 && track.scrollLeft >= max - 1)) return;
+      e.preventDefault();
+      track.scrollBy({ left: e.deltaY, behavior: 'instant' });
+    }, { passive: false });
+    update();
+  }
+  window.addEventListener('resize', () => document.querySelectorAll('.chip-scroller').forEach(s => $('.chips', s).dispatchEvent(new Event('scroll'))));
 
   function renderResults() {
     const list = RECIPES.filter(r => (!ui.continent || r.continent === ui.continent) && (!ui.region || r.region === ui.region) && matches(r, ui.query));
@@ -696,6 +733,11 @@
     if (!el || el.tagName === 'INPUT') return;
     const a = el.dataset.action, id = el.dataset.id;
     switch (a) {
+      case 'chip-scroll': {
+        const track = $('.chips', el.closest('.chip-scroller'));
+        track.scrollBy({ left: Number(el.dataset.dir) * track.clientWidth * 0.7, behavior: 'smooth' });
+        break;
+      }
       case 'continent':
         ui.continent = el.dataset.continent;
         ui.region = '';
@@ -865,11 +907,43 @@
     installEvt = e;
     $('#installBtn').hidden = false;
   });
+  // iPhone/iPad never fire beforeinstallprompt, so offer step-by-step "Add to Home Screen" help instead.
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isStandalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  if (isIOS && !isStandalone) {
+    $('#installBtn').textContent = 'Add to Home Screen';
+    $('#installBtn').hidden = false;
+  }
+  function showIOSInstall() {
+    const share = '<svg viewBox="0 0 24 24" aria-label="Share icon"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5v10h14V11h-1"/></svg>';
+    const plus = '<svg viewBox="0 0 24 24" aria-label="Add icon"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg>';
+    const sheet = document.createElement('div');
+    sheet.className = 'sheet-backdrop';
+    sheet.dataset.action = 'close-sheet';
+    sheet.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" data-action="none">
+      <h2 id="sheetTitle">Add Cookbook to your iPhone</h2>
+      <ol class="install-steps">
+        <li><span>Tap the <b>Share</b> button ${share} in Safari's toolbar, at the bottom of the screen (top right on iPad).</span></li>
+        <li><span>Scroll down the menu and tap <b>Add to Home Screen</b> ${plus}.</span></li>
+        <li><span>Keep the name "Cookbook" and tap <b>Add</b> in the top-right corner.</span></li>
+        <li><span>Open Cookbook from the new icon on your Home Screen.</span></li>
+      </ol>
+      <p class="muted small">It opens full-screen like an app and works offline once it has loaded.</p>
+      <p class="muted small">Using Chrome or another browser? Tap its Share button and choose Add to Home Screen, or open this page in Safari.</p>
+      <button type="button" class="btn primary block" data-action="close-sheet">Got it</button>
+    </div>`;
+    document.body.appendChild(sheet);
+    $('.sheet .btn', sheet).focus();
+  }
   $('#installBtn').addEventListener('click', async () => {
-    if (!installEvt) return;
+    if (!installEvt) { if (isIOS) showIOSInstall(); return; }
     installEvt.prompt();
     await installEvt.userChoice.catch(() => {});
     installEvt = null;
     $('#installBtn').hidden = true;
   });
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-action]')?.dataset.action === 'close-sheet') document.querySelector('.sheet-backdrop')?.remove();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelector('.sheet-backdrop')?.remove(); });
 })();

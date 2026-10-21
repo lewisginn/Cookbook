@@ -1,6 +1,6 @@
 // Service worker: caches the app so it works offline once installed.
 // Network-first, so new recipes show up as soon as you're online. Bump VERSION when adding files.
-const VERSION = 'cookbook-v4';
+const VERSION = 'cookbook-v5';
 const FILES = [
   './',
   'index.html',

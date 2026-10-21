@@ -168,6 +168,58 @@ main { outline: none; }
 .region { margin-top: 16px; }
 .region > h3 { font: 700 .78rem var(--sans); text-transform: uppercase; letter-spacing: .07em; color: var(--accent); margin-bottom: 10px; }
 .chips.sub { margin-top: -2px; }
+
+/* Chip rows: arrow buttons + edge fades on mouse/trackpad devices; plain swipe on touch. */
+.chip-scroller { position: relative; }
+.chip-scroller::before, .chip-scroller::after {
+  content: ""; position: absolute; top: 0; bottom: 8px; width: 64px; z-index: 1;
+  pointer-events: none; opacity: 0; transition: opacity .15s;
+}
+.chip-scroller::before { left: 0; background: linear-gradient(to right, var(--bg) 45%, transparent); }
+.chip-scroller::after { right: 0; background: linear-gradient(to left, var(--bg) 45%, transparent); }
+.chip-scroller.fade-left::before, .chip-scroller.fade-right::after { opacity: 1; }
+.chip-arrow {
+  position: absolute; top: 2px; z-index: 2; display: grid; place-items: center;
+  width: 36px; height: 36px; padding: 0 0 3px; border-radius: 50%;
+  border: 1px solid var(--line); background: var(--surface); color: var(--text);
+  font-size: 1.5rem; line-height: 1; cursor: pointer; box-shadow: var(--shadow);
+}
+.chip-arrow:hover { border-color: var(--accent); color: var(--accent); }
+.chip-arrow.left { left: 0; }
+.chip-arrow.right { right: 0; }
+.chip-scroller:has(.chips.sub) .chip-arrow { width: 32px; height: 32px; font-size: 1.3rem; }
+@media (hover: hover) and (pointer: fine) {
+  .chip-scroller .chips { margin-inline: 0; padding-inline: 0; scroll-behavior: smooth; }
+}
+@media (hover: none), (pointer: coarse) {
+  .chip-arrow { display: none; }
+}
+
+/* Install-instructions sheet */
+.sheet-backdrop {
+  position: fixed; inset: 0; z-index: 50; display: grid; align-items: end; justify-items: center;
+  background: rgba(0, 0, 0, .45); animation: fadeIn .15s ease;
+}
+.sheet {
+  width: min(100%, 480px); max-height: 90dvh; overflow: auto;
+  background: var(--surface); color: var(--text); border-radius: 22px 22px 0 0;
+  padding: 22px 20px calc(20px + var(--safe-b)); box-shadow: 0 -8px 30px rgba(0, 0, 0, .25);
+  animation: sheetUp .22s ease;
+}
+@media (min-width: 560px) { .sheet-backdrop { align-items: center; } .sheet { border-radius: 22px; } }
+.sheet h2 { margin-bottom: 14px; }
+.install-steps { margin: 0 0 14px; padding: 0; list-style: none; counter-reset: step; }
+.install-steps li { counter-increment: step; display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.install-steps li:last-child { border-bottom: 0; }
+.install-steps li::before {
+  content: counter(step); flex: none; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent); font-weight: 700; display: grid; place-items: center;
+}
+.install-steps svg { width: 1.2em; height: 1.2em; vertical-align: -0.2em; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.sheet .muted { margin: 6px 0; }
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes sheetUp { from { transform: translateY(30px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .sheet, .sheet-backdrop { animation: none; } }
 .chips.sub .chip { height: 32px; padding: 0 13px; font-size: .8rem; font-weight: 600; }
 .chips.sub .chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 .search.compact { margin-bottom: 4px; }
