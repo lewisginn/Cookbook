@@ -432,6 +432,14 @@
     return out;
   }
 
+  // "8 oz + 1½ lb" → "2 lb": combine weights, rounding up to the next ¼ lb.
+  function mergeWeights(amounts) {
+    if (amounts.oz == null || amounts.lb == null) return amounts;
+    const { oz, lb, ...out } = amounts;
+    out.lb = Math.ceil((lb + oz / 16) * 4) / 4;
+    return out;
+  }
+
   function buildList() {
     const map = new Map();
     for (const [id, servings] of Object.entries(shop.selected)) {
@@ -459,7 +467,7 @@
       ...e,
       // "1 carrots" → "1 large carrot": a single counted item keeps its singular recipe wording
       name: e.items.size === 1 && Object.keys(e.amounts).join() === '' && e.amounts[''] <= 1 ? [...e.items][0] : e.name,
-      amount: Object.entries(mergeVolumes(e.amounts)).map(([u, q]) => fmtAmount(q, u)).join(' + '),
+      amount: Object.entries(mergeWeights(mergeVolumes(e.amounts))).map(([u, q]) => fmtAmount(q, u)).join(' + '),
       recipes: [...e.recipes]
     }));
     const groups = [];

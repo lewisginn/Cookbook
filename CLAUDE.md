@@ -57,15 +57,17 @@ then run `node tools/format-recipes.js`. It merges them into the right continent
 
 ### Continents and regions in use
 
-- **Africa:** East African, North African, Southern African, West African
-- **Asia:** Chinese, Filipino, Indian, Indonesian & Malaysian, Japanese, Korean, Thai, Vietnamese
-- **Caribbean:** Cuban, Jamaican, Puerto Rican
-- **Europe:** British & Irish, Central & Eastern European, French, German & Austrian, Greek, Italian, Portuguese, Scandinavian, Spanish
-- **Middle East:** Israeli, Levantine, Persian, Turkish
-- **North America:** Cajun & Creole, Central American, Chesapeake & Mid-Atlantic, Mexican, Northeastern, Southern & Soul Food, Tex-Mex & Southwestern
-- **South America:** Argentine, Brazilian, Colombian & Venezuelan, Peruvian
+300 recipes as of the last update:
 
-Mexico and Central America sit under North America (the user's preference); the Caribbean is its own continent group. Add new regions freely when a recipe doesn't fit (e.g. `Hawaiian`, `Midwestern`, `Pakistani`, `Taiwanese`, `Lebanese`); the UI picks them up automatically.
+- **Africa** (25): East African, North African, Southern African, West African
+- **Asia** (75): Chinese, Filipino, Indian, Indonesian & Malaysian, Japanese, Korean, Nepali & Tibetan, Pakistani, Singaporean, Sri Lankan, Taiwanese, Thai, Vietnamese
+- **Caribbean** (20): Cuban, Dominican, Haitian, Jamaican, Puerto Rican, Trinidadian
+- **Europe** (62): Belgian & Swiss, British & Irish, Central & Eastern European, French, German & Austrian, Greek, Italian, Portuguese, Scandinavian, Spanish
+- **Middle East** (30): Arabian Peninsula, Iraqi, Israeli, Levantine, Persian, Turkish
+- **North America** (63): Cajun & Creole, Californian & Pacific Northwest, Central American, Chesapeake & Mid-Atlantic, Hawaiian, Italian-American, Mexican, Midwestern, Northeastern, Southern & Soul Food, Tex-Mex & Southwestern
+- **South America** (25): Argentine, Brazilian, Chilean, Colombian & Venezuelan, Ecuadorian & Bolivian, Peruvian
+
+Mexico and Central America sit under North America (the user's preference); the Caribbean is its own continent group. Regions are ethnicities / sub-regional cuisines, not countries for their own sake; add new ones freely when a recipe doesn't fit. The UI picks them up automatically. Check `recipes/` for an existing recipe before adding one (ids must be unique; the formatter rejects duplicates).
 
 ### Conventions
 
@@ -73,6 +75,7 @@ Mexico and Central America sit under North America (the user's preference); the 
 - **Units:** `cup`, `tbsp`, `tsp`, `lb`, `oz`, `ml`, `quart`, `in` (ginger/galangal), `stick`, `bunch`, `can`, `head`, `stalk`, `sprig`, `slice`, `loaf`, `pinch`, or none for counted items (put the noun in `item`, e.g. `qty: 8, item: 'garlic cloves'`).
 - Use the **same `item` (or `shop`) name** across recipes for shared ingredients so they merge on the shopping list. Before inventing a name, grep `recipes/` for an existing one. Common ones: `yellow onions`, `white onions`, `red onions`, `shallots`, `garlic cloves`, `fresh ginger` (unit `in`), `cilantro` / `flat-leaf parsley` (cups), `scallions`, `lemons`, `limes`, `Roma tomatoes`, `red bell peppers`, `green bell peppers`, `serrano chilies`, `jalapeños`, `scotch bonnet peppers`, `carrots`, `celery` (unit `stalk`), `fresh thyme` (unit `sprig`), `Yukon Gold potatoes` (lb), `boneless skinless chicken thighs`, `bone-in skin-on chicken thighs`, `boneless pork shoulder`, `beef chuck roast`, `large shrimp` (lb), `eggs`, `unsalted butter`, `heavy cream`, `whole milk`, `plain whole-milk yogurt`, `plain Greek yogurt`, `sour cream`, `canned crushed tomatoes` (oz), `tomato paste`, `chicken stock`, `beef stock`, `coconut milk` (oz), `basmati rice`, `jasmine rice`, `long-grain white rice`, `short-grain white rice`, `all-purpose flour`, `fish sauce`, `soy sauce`, `tahini`, `crusty bread` (unit `loaf`). Staples: `kosher salt`, `black pepper`, `vegetable oil`, `olive oil`, `granulated sugar`, `brown sugar`.
 - For a half/single item, use singular `item` with plural `shop` (e.g. `item: 'lemon', shop: 'lemons'`).
-- tsp/tbsp/cup amounts are auto-combined on the shopping list; other units are listed side by side.
+- tsp/tbsp/cup amounts and oz/lb amounts are auto-combined on the shopping list; any other unit mix is listed side by side ("2 heads + 1 bunch"), so keep each ingredient in one unit family across recipes. To audit: select every recipe on the Shopping tab and look for " + " in amounts.
+- Bulk edits across many recipes: drop a script like `recipes/zz-fixes.js` that mutates `window.RECIPES` (it loads after the continent files), then run the formatter, which bakes the changes in and deletes the script.
 - Only step `text` gets timer buttons (not `tip` or `notes`), so avoid stray durations in step text that aren't real timers (e.g. say "up to a day" rather than "up to 24 hours").
 - After changing app files (not just recipes), bump `VERSION` in `sw.js` so installed copies refresh their cache.
