@@ -2,27 +2,38 @@
 
 Personal cookbook web app (installable PWA). Plain HTML/CSS/JS — no build step, no dependencies.
 
-- `recipes.js` — **all recipe data** (`window.RECIPES` array). This is the only file to touch when adding recipes.
-- `app.js` — the whole UI: Recipes (grouped by region), recipe detail, Cook (follow-along step mode with timers), Shopping (multi-recipe list builder).
+- `recipes/*.js` — **all recipe data**, one file per continent (`north-america.js`, `europe.js`, …). Each pushes onto `window.RECIPES`.
+- `tools/format-recipes.js` — validates every recipe, rewrites the continent files in a consistent format (sorted by region, then name, with region banners), and regenerates the recipe `<script>` tags in `index.html` and the precache list in `sw.js` (between the `recipes:start` / `recipes:end` markers). **Run it after any recipe change:** `node tools/format-recipes.js`. It refuses to write anything if validation fails.
+- `app.js` — the whole UI: Recipes (grouped continent → region), recipe detail, Cook (follow-along step mode with timers), Shopping (multi-recipe list builder).
 - `styles.css`, `index.html`, `manifest.webmanifest`, `sw.js` (offline cache), `icons/`.
 - `serve.js` — `node serve.js` serves on port 8080 on all interfaces (prints the LAN URL for a phone).
 - `tools/make_icons.py` — regenerates the PNG icons (needs Pillow).
 
 User state (shopping list, checked ingredients, servings, timers) lives in the browser's localStorage under `cookbook.*` keys.
 
-## Adding a recipe
+## Adding recipes
 
-Append an object to the array in `recipes.js`, placed under the matching region comment banner (add a new banner for a new region). Keep recipes authentic and well-tested; write quantities for the stated `servings`.
+Easiest path: write the new recipes into a scratch file such as `recipes/new.js`:
+
+```js
+(window.RECIPES = window.RECIPES || []).push(
+  { /* recipe */ },
+  { /* recipe */ }
+);
+```
+
+then run `node tools/format-recipes.js`. It merges them into the right continent files and deletes the scratch file. (Editing a continent file directly and re-running the formatter works too.)
 
 ```js
 {
   id: 'kebab-case-unique-id',
   name: 'Display Name',
-  nativeName: 'Optional name in original language',
+  nativeName: 'Optional name in original language/script',
   short: 'Short label',            // used on shopping list "for" tags and timer labels
-  region: 'South Asian',            // UI grouping — reuse an existing region string exactly
-  cuisine: 'Indian · Goan',          // subtitle
-  emoji: '🍛',
+  continent: 'North America',       // top-level grouping — reuse an existing string exactly
+  region: 'Cajun & Creole',         // ethnicity / sub-regional cuisine within the continent
+  cuisine: 'Louisiana',             // optional finer subtitle (city, state, sub-style); omit if it would repeat region
+  emoji: '🍲',
   description: 'One or two sentences.',
   servings: 4,
   time: { prep: 25, cook: 55, inactive: 60, inactiveLabel: 'marinate' }, // minutes; inactive optional
@@ -44,12 +55,24 @@ Append an object to the array in `recipes.js`, placed under the matching region 
 }
 ```
 
-Conventions:
-- **Regions in use:** `African`, `Caribbean`, `East Asian`, `European`, `Latin American`, `Mediterranean`, `Middle Eastern`, `North American`, `South Asian`, `Southeast Asian`. Each region has a `// ─── Region ───` banner in `recipes.js`; keep recipes under their banner.
+### Continents and regions in use
+
+- **Africa:** East African, North African, Southern African, West African
+- **Asia:** Chinese, Filipino, Indian, Indonesian & Malaysian, Japanese, Korean, Thai, Vietnamese
+- **Caribbean:** Cuban, Jamaican, Puerto Rican
+- **Europe:** British & Irish, Central & Eastern European, French, German & Austrian, Greek, Italian, Portuguese, Scandinavian, Spanish
+- **Middle East:** Israeli, Levantine, Persian, Turkish
+- **North America:** Cajun & Creole, Central American, Chesapeake & Mid-Atlantic, Mexican, Northeastern, Southern & Soul Food, Tex-Mex & Southwestern
+- **South America:** Argentine, Brazilian, Colombian & Venezuelan, Peruvian
+
+Mexico and Central America sit under North America (the user's preference); the Caribbean is its own continent group. Add new regions freely when a recipe doesn't fit (e.g. `Hawaiian`, `Midwestern`, `Pakistani`, `Taiwanese`, `Lebanese`); the UI picks them up automatically.
+
+### Conventions
+
 - **Aisles:** `produce`, `meat`, `seafood`, `dairy`, `bakery`, `international`, `spices`, `pantry`, `frozen`, `other`, `none`.
-- **Units:** `cup`, `tbsp`, `tsp`, `lb`, `oz`, `g`, `kg`, `ml`, `quart`, `in` (ginger), `stick`, `bunch`, `can`, `pinch`, or none for counted items (put the noun in `item`, e.g. `qty: 8, item: 'garlic cloves'`).
-- Use the **same `item` (or `shop`) name** across recipes for shared ingredients so they merge on the shopping list. Established names: `yellow onions`, `white onions`, `red onions`, `shallots`, `garlic cloves`, `fresh ginger` (unit `in`), `cilantro` (cups), `scallions`, `lemons`, `limes`, `Roma tomatoes`, `red bell peppers`, `serrano chilies`, `jalapeños`, `cucumbers`, `bean sprouts`, `boneless skinless chicken thighs`, `eggs`, `unsalted butter`, `heavy cream`, `plain whole-milk yogurt`, `canned crushed tomatoes` (unit `oz`), `tomato paste`, `chicken stock`, `basmati rice`, `fish sauce`, `soy sauce`, `ground cumin`, `ground coriander`, `garam masala`, `ground turmeric`, `Kashmiri chili powder`, `smoked paprika`, `red pepper flakes`, `bay leaves`, `whole cloves`, `cinnamon` (unit `stick`), `black peppercorns`, `cumin seeds`, `boneless pork shoulder`, `beef chuck roast`, `bone-in skin-on chicken thighs`, `large shrimp` (unit `lb`), `carrots`, `oranges`, `flat-leaf parsley` (cups), `fresh thyme` (unit `sprig`), `celery` (unit `stalk`), `scotch bonnet peppers`, `feta` (oz), `plain Greek yogurt`, `tahini`, `all-purpose flour`, `lard`, `long-grain white rice`, `loaf crusty bread`, `pita breads`, `corn tortillas`, `sweet paprika`, `ground cinnamon`, `cayenne pepper`, `dried oregano`, `dried Mexican oregano`, `dried thyme`, `red wine vinegar`, `apple cider vinegar`. Staples: `kosher salt`, `black pepper`, `vegetable oil`, `olive oil`, `granulated sugar`, `brown sugar`. For a half/single item, use singular `item` with plural `shop` (e.g. `item: 'lemon', shop: 'lemons'`).
-- tsp/tbsp/cup amounts of the same ingredient are auto-combined on the shopping list; other units are listed side by side.
+- **Units:** `cup`, `tbsp`, `tsp`, `lb`, `oz`, `ml`, `quart`, `in` (ginger/galangal), `stick`, `bunch`, `can`, `head`, `stalk`, `sprig`, `slice`, `loaf`, `pinch`, or none for counted items (put the noun in `item`, e.g. `qty: 8, item: 'garlic cloves'`).
+- Use the **same `item` (or `shop`) name** across recipes for shared ingredients so they merge on the shopping list. Before inventing a name, grep `recipes/` for an existing one. Common ones: `yellow onions`, `white onions`, `red onions`, `shallots`, `garlic cloves`, `fresh ginger` (unit `in`), `cilantro` / `flat-leaf parsley` (cups), `scallions`, `lemons`, `limes`, `Roma tomatoes`, `red bell peppers`, `green bell peppers`, `serrano chilies`, `jalapeños`, `scotch bonnet peppers`, `carrots`, `celery` (unit `stalk`), `fresh thyme` (unit `sprig`), `Yukon Gold potatoes` (lb), `boneless skinless chicken thighs`, `bone-in skin-on chicken thighs`, `boneless pork shoulder`, `beef chuck roast`, `large shrimp` (lb), `eggs`, `unsalted butter`, `heavy cream`, `whole milk`, `plain whole-milk yogurt`, `plain Greek yogurt`, `sour cream`, `canned crushed tomatoes` (oz), `tomato paste`, `chicken stock`, `beef stock`, `coconut milk` (oz), `basmati rice`, `jasmine rice`, `long-grain white rice`, `short-grain white rice`, `all-purpose flour`, `fish sauce`, `soy sauce`, `tahini`, `crusty bread` (unit `loaf`). Staples: `kosher salt`, `black pepper`, `vegetable oil`, `olive oil`, `granulated sugar`, `brown sugar`.
+- For a half/single item, use singular `item` with plural `shop` (e.g. `item: 'lemon', shop: 'lemons'`).
+- tsp/tbsp/cup amounts are auto-combined on the shopping list; other units are listed side by side.
 - Only step `text` gets timer buttons (not `tip` or `notes`), so avoid stray durations in step text that aren't real timers (e.g. say "up to a day" rather than "up to 24 hours").
-- Write step times as digits ("12 minutes", not "twelve minutes") and use a decimal for fractional hours ("1.5 hours") so the timer detector picks them up.
 - After changing app files (not just recipes), bump `VERSION` in `sw.js` so installed copies refresh their cache.

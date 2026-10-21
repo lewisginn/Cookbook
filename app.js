@@ -4,7 +4,10 @@
   // ───────────────────────── Data & constants ─────────────────────────
   const RECIPES = (window.RECIPES || []).slice().sort((a, b) => a.name.localeCompare(b.name));
   const byId = Object.fromEntries(RECIPES.map(r => [r.id, r]));
-  const REGIONS = [...new Set(RECIPES.map(r => r.region))].sort();
+  const uniq = xs => [...new Set(xs)].sort();
+  const CONTINENTS = uniq(RECIPES.map(r => r.continent));
+  const REGIONS_IN = Object.fromEntries(CONTINENTS.map(c => [c, uniq(RECIPES.filter(r => r.continent === c).map(r => r.region))]));
+  const REGION_COUNT = Object.values(REGIONS_IN).flat().length;
 
   const AISLES = [
     ['produce', 'Produce', '🥬'],
@@ -23,7 +26,7 @@
   const PLURAL = {
     cup: 'cups', quart: 'quarts', bunch: 'bunches', can: 'cans', stick: 'sticks', pod: 'pods',
     piece: 'pieces', sprig: 'sprigs', stalk: 'stalks', head: 'heads', package: 'packages',
-    pinch: 'pinches', slice: 'slices', clove: 'cloves', jar: 'jars', bottle: 'bottles'
+    pinch: 'pinches', slice: 'slices', clove: 'cloves', jar: 'jars', bottle: 'bottles', loaf: 'loaves'
   };
   const FRACS = [[0, ''], [1 / 8, '⅛'], [1 / 4, '¼'], [1 / 3, '⅓'], [3 / 8, '⅜'], [1 / 2, '½'],
     [5 / 8, '⅝'], [2 / 3, '⅔'], [3 / 4, '¾'], [7 / 8, '⅞'], [1, '']];
@@ -48,7 +51,7 @@
   const saveCook = () => store.set('cook', cook);
   const saveTimers = () => store.set('timers', timers);
 
-  const ui = { query: '', region: '', shopPane: null };
+  const ui = { query: '', continent: '', region: '', shopPane: null, pickQuery: '' };
 
   // ───────────────────────── Helpers ─────────────────────────
   const $ = (sel, el = document) => el.querySelector(sel);
@@ -116,10 +119,19 @@
 
   function matches(r, q) {
     if (!q) return true;
-    const hay = [r.name, r.nativeName, r.cuisine, r.region, ...(r.tags || []), ...r.ingredients.map(i => i.item)]
+    const hay = [r.name, r.nativeName, r.cuisine, r.region, r.continent, ...(r.tags || []), ...r.ingredients.map(i => i.item)]
       .join(' ').toLowerCase();
     return q.toLowerCase().split(/\s+/).every(w => hay.includes(w));
   }
+
+  // "Cajun & Creole · Louisiana"
+  const origin = r => r.region + (r.cuisine ? ` · ${r.cuisine}` : '');
+
+  // [[continent, [[region, recipes], …]], …] in display order, dropping empty groups.
+  const grouped = list => CONTINENTS
+    .map(c => [c, REGIONS_IN[c].map(rg => [rg, list.filter(r => r.continent === c && r.region === rg)]).filter(g => g[1].length)])
+    .filter(g => g[1].length);
+  const countIn = regions => regions.reduce((n, g) => n + g[1].length, 0);
 
   // ───────────────────────── Shared fragments ─────────────────────────
   function servingsStepper(r) {
@@ -161,32 +173,48 @@
     view.innerHTML = `<section class="page">
       <div class="page-head">
         <h1>Recipes</h1>
-        <p class="muted">${RECIPES.length} recipe${RECIPES.length === 1 ? '' : 's'} across ${REGIONS.length} region${REGIONS.length === 1 ? '' : 's'}</p>
+        <p class="muted">${RECIPES.length} recipes · ${CONTINENTS.length} continents · ${REGION_COUNT} regions</p>
       </div>
       <div class="search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
-        <input id="search" type="search" placeholder="Search recipes or ingredients…" value="${esc(ui.query)}" autocomplete="off">
+        <input id="search" type="search" placeholder="Search recipes, regions or ingredients…" value="${esc(ui.query)}" autocomplete="off">
       </div>
-      <div class="chips" role="group" aria-label="Filter by region">
-        ${['', ...REGIONS].map(rg => `<button type="button" class="chip${ui.region === rg ? ' on' : ''}" data-action="region" data-region="${esc(rg)}">${rg ? esc(rg) : 'All regions'}</button>`).join('')}
-      </div>
+      <div id="chips"></div>
       <div id="results"></div>
     </section>`;
     $('#search').addEventListener('input', e => { ui.query = e.target.value; renderResults(); });
+    renderChips();
     renderResults();
   }
 
+  function renderChips() {
+    const chip = (action, key, value, label, on) =>
+      `<button type="button" class="chip${on ? ' on' : ''}" data-action="${action}" data-${key}="${esc(value)}">${esc(label)}</button>`;
+    const regions = ui.continent ? REGIONS_IN[ui.continent] : [];
+    $('#chips').innerHTML = `
+      <div class="chips" role="group" aria-label="Filter by continent">
+        ${chip('continent', 'continent', '', 'All', !ui.continent)}
+        ${CONTINENTS.map(c => chip('continent', 'continent', c, c, ui.continent === c)).join('')}
+      </div>
+      ${regions.length > 1 ? `<div class="chips sub" role="group" aria-label="Filter by region">
+        ${chip('region', 'region', '', `All ${ui.continent}`, !ui.region)}
+        ${regions.map(rg => chip('region', 'region', rg, rg, ui.region === rg)).join('')}
+      </div>` : ''}`;
+  }
+
   function renderResults() {
-    const list = RECIPES.filter(r => (!ui.region || r.region === ui.region) && matches(r, ui.query));
+    const list = RECIPES.filter(r => (!ui.continent || r.continent === ui.continent) && (!ui.region || r.region === ui.region) && matches(r, ui.query));
     if (!list.length) {
       $('#results').innerHTML = `<div class="empty"><p>No recipes match “${esc(ui.query)}”.</p></div>`;
       return;
     }
-    const groups = REGIONS.map(rg => [rg, list.filter(r => r.region === rg)]).filter(g => g[1].length);
-    $('#results').innerHTML = groups.map(([rg, rs]) => `
-      <section class="region">
-        <h2>${esc(rg)} <span class="count">${rs.length}</span></h2>
-        <div class="grid">${rs.map(card).join('')}</div>
+    $('#results').innerHTML = grouped(list).map(([c, regions]) => `
+      <section class="continent">
+        <h2>${esc(c)} <span class="count">${countIn(regions)}</span></h2>
+        ${regions.map(([rg, rs]) => `<div class="region">
+          <h3>${esc(rg)}</h3>
+          <div class="grid">${rs.map(card).join('')}</div>
+        </div>`).join('')}
       </section>`).join('');
   }
 
@@ -194,10 +222,10 @@
     const extra = r.time?.inactive ? ` + ${fmtMin(r.time.inactive)} ${esc(r.time.inactiveLabel || 'resting')}` : '';
     return `<article class="card recipe-card">
       <a class="card-link" href="#/recipe/${r.id}">
-        <div class="card-emoji" style="--h:${hue(r.region)}">${esc(r.emoji || '🍽️')}</div>
+        <div class="card-emoji" style="--h:${hue(r.continent)}">${esc(r.emoji || '🍽️')}</div>
         <div class="card-body">
           <h3>${esc(r.name)}</h3>
-          <p class="sub">${esc(r.cuisine)}${r.nativeName ? ` · <i>${esc(r.nativeName)}</i>` : ''}</p>
+          <p class="sub">${esc(origin(r))}${r.nativeName ? ` · <i>${esc(r.nativeName)}</i>` : ''}</p>
           <p class="meta"><span>${fmtMin(totalTime(r))}${extra}</span><span>${r.servings} servings</span><span title="Heat">${heat(r.heat)}</span></p>
         </div>
       </a>
@@ -221,9 +249,9 @@
     view.innerHTML = `<article class="page recipe">
       <a class="back" href="#/recipes">← All recipes</a>
       <header class="hero">
-        <div class="hero-emoji" style="--h:${hue(r.region)}">${esc(r.emoji || '🍽️')}</div>
+        <div class="hero-emoji" style="--h:${hue(r.continent)}">${esc(r.emoji || '🍽️')}</div>
         <div class="hero-text">
-          <p class="eyebrow">${esc(r.region)} · ${esc(r.cuisine)}</p>
+          <p class="eyebrow">${esc(r.continent)} · ${esc(origin(r))}</p>
           <h1>${esc(r.name)}${r.nativeName ? ` <span class="native">${esc(r.nativeName)}</span>` : ''}</h1>
           <p class="desc">${esc(r.description)}</p>
           <dl class="facts">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
@@ -290,11 +318,11 @@
   function renderCookPicker() {
     view.innerHTML = `<section class="page">
       <div class="page-head"><h1>What are we cooking?</h1><p class="muted">Pick a recipe to follow step by step.</p></div>
-      ${REGIONS.map(rg => `<section class="region"><h2>${esc(rg)}</h2>
-        <div class="pick-list">${RECIPES.filter(r => r.region === rg).map(r => `
+      ${grouped(RECIPES).map(([c, regions]) => `<section class="continent"><h2>${esc(c)}</h2>
+        <div class="pick-list">${regions.flatMap(g => g[1]).map(r => `
           <a class="pick-row link" href="#/cook/${r.id}">
             <span class="pick-emoji">${esc(r.emoji || '🍽️')}</span>
-            <span class="pick-name">${esc(r.name)}<small>${esc(r.cuisine)} · ${fmtMin(totalTime(r))}</small></span>
+            <span class="pick-name">${esc(r.name)}<small>${esc(origin(r))} · ${fmtMin(totalTime(r))}</small></span>
             <span aria-hidden="true">→</span>
           </a>`).join('')}</div></section>`).join('')}
     </section>`;
@@ -384,14 +412,14 @@
   }
 
   // ───────────────────────── Shopping list ─────────────────────────
-  // "1½ tsp + 1 tbsp" → "1½ tbsp": combine tsp/tbsp/cup into the unit that reads cleanly
-  // (¼/⅓ cups, ½ tbsp), so 18 tsp shows as "6 tbsp" rather than "⅜ cup". Awkward totals round
-  // up to the next ¼ cup or ½ tbsp — it's a shopping list, so a little extra is fine.
+  // "1½ tsp + 1 tbsp" → "1½ tbsp", "24 tsp" → "½ cup": express tsp/tbsp/cup totals in the unit that
+  // reads cleanly (¼/⅓ cups, ½ tbsp), so 18 tsp shows as "6 tbsp" rather than "⅜ cup". Awkward totals
+  // round up to the next ¼ cup or ½ tbsp — it's a shopping list, so a little extra is fine.
   const TSP = { tsp: 1, tbsp: 3, cup: 48 };
-  const isNice = (q, steps) => steps.some(d => Math.abs(q * d - Math.round(q * d)) < 0.01);
+  const isNice = (q, steps) => steps.some(d => Math.abs(q * d - Math.round(q * d)) < 0.02);
   function mergeVolumes(amounts) {
     const vol = Object.keys(amounts).filter(u => TSP[u]);
-    if (vol.length < 2) return amounts;
+    if (!vol.length) return amounts;
     const out = Object.fromEntries(Object.entries(amounts).filter(([u]) => !TSP[u]));
     const tsp = vol.reduce((sum, u) => sum + amounts[u] * TSP[u], 0);
     const unit = tsp >= 12 && isNice(tsp / 48, [4, 3]) ? 'cup'
@@ -452,22 +480,6 @@
     const remaining = allItems.filter(i => !shop.checked[i.key]).length + shop.custom.filter(c => !c.checked).length;
     const total = allItems.length + shop.custom.length;
 
-    const picker = REGIONS.map(rg => `<div class="pick-group"><h3>${esc(rg)}</h3>
-      ${RECIPES.filter(r => r.region === rg).map(r => {
-        const on = shop.selected[r.id];
-        return `<div class="pick-row${on ? ' on' : ''}">
-          <label class="check"><input type="checkbox" data-action="pick" data-id="${r.id}"${on ? ' checked' : ''}><span class="box"></span>
-            <span class="pick-emoji">${esc(r.emoji || '🍽️')}</span>
-            <span class="pick-name">${esc(r.name)}<small>${esc(r.cuisine)}</small></span>
-          </label>
-          ${on ? `<div class="stepper small" role="group" aria-label="Servings for ${esc(r.name)}">
-            <button type="button" data-action="shop-servings" data-id="${r.id}" data-delta="-1" aria-label="Fewer servings">−</button>
-            <span><b>${on}</b> srv</span>
-            <button type="button" data-action="shop-servings" data-id="${r.id}" data-delta="1" aria-label="More servings">+</button>
-          </div>` : ''}
-        </div>`;
-      }).join('')}</div>`).join('');
-
     const itemRow = i => `<li><label class="check${shop.checked[i.key] ? ' done' : ''}">
       <input type="checkbox" data-action="check" data-key="${esc(i.key)}"${shop.checked[i.key] ? ' checked' : ''}><span class="box"></span>
       <span class="item-text">${i.amount ? `<b class="qty">${esc(i.amount)}</b> ` : ''}${esc(i.name)}${i.optional ? ' <span class="note">(optional)</span>' : ''}
@@ -500,7 +512,11 @@
       <div class="shop-layout" data-pane="${ui.shopPane}">
         <section class="panel pane-pick">
           <div class="panel-head"><h2>Recipes</h2>${selCount ? '<button type="button" class="link-btn" data-action="clear-selected">Clear</button>' : ''}</div>
-          ${picker}
+          <div class="search compact">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            <input id="pickSearch" type="search" placeholder="Find a recipe…" value="${esc(ui.pickQuery)}" autocomplete="off">
+          </div>
+          <div id="pickList"></div>
           ${selCount ? '<button type="button" class="btn primary block only-narrow" data-action="pane" data-pane="list">View list →</button>' : ''}
         </section>
         <section class="panel pane-list">
@@ -519,6 +535,9 @@
       </div>
     </section>`;
 
+    $('#pickSearch').addEventListener('input', e => { ui.pickQuery = e.target.value; renderPicker(); });
+    renderPicker();
+
     $('#addItem').addEventListener('submit', e => {
       e.preventDefault();
       const input = $('#customInput');
@@ -530,6 +549,32 @@
       renderShop();
       $('#customInput').focus();
     });
+  }
+
+  function pickRow(r) {
+    const on = shop.selected[r.id];
+    return `<div class="pick-row${on ? ' on' : ''}">
+      <label class="check"><input type="checkbox" data-action="pick" data-id="${r.id}"${on ? ' checked' : ''}><span class="box"></span>
+        <span class="pick-emoji">${esc(r.emoji || '🍽️')}</span>
+        <span class="pick-name">${esc(r.name)}<small>${esc(origin(r))}</small></span>
+      </label>
+      ${on ? `<div class="stepper small" role="group" aria-label="Servings for ${esc(r.name)}">
+        <button type="button" data-action="shop-servings" data-id="${r.id}" data-delta="-1" aria-label="Fewer servings">−</button>
+        <span><b>${on}</b> srv</span>
+        <button type="button" data-action="shop-servings" data-id="${r.id}" data-delta="1" aria-label="More servings">+</button>
+      </div>` : ''}
+    </div>`;
+  }
+
+  // Picked recipes stay pinned on top; everything else is grouped by continent and filtered by the search box.
+  function renderPicker() {
+    const picked = RECIPES.filter(r => shop.selected[r.id]);
+    const rest = RECIPES.filter(r => !shop.selected[r.id] && matches(r, ui.pickQuery));
+    $('#pickList').innerHTML =
+      (picked.length ? `<div class="pick-group"><h3>On your list</h3>${picked.map(pickRow).join('')}</div>` : '') +
+      (rest.length
+        ? grouped(rest).map(([c, regions]) => `<div class="pick-group"><h3>${esc(c)}</h3>${regions.flatMap(g => g[1]).map(pickRow).join('')}</div>`).join('')
+        : `<p class="muted small">No recipes match “${esc(ui.pickQuery)}”.</p>`);
   }
 
   function listAsText() {
@@ -643,9 +688,15 @@
     if (!el || el.tagName === 'INPUT') return;
     const a = el.dataset.action, id = el.dataset.id;
     switch (a) {
+      case 'continent':
+        ui.continent = el.dataset.continent;
+        ui.region = '';
+        renderChips();
+        renderResults();
+        break;
       case 'region':
         ui.region = el.dataset.region;
-        document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === el));
+        renderChips();
         renderResults();
         break;
       case 'toggle-shop': {

@@ -163,8 +163,15 @@ main { outline: none; }
 .chip.on { background: var(--text); border-color: var(--text); color: var(--bg); }
 
 /* ───────── Recipe cards ───────── */
-.region { margin-top: 22px; }
-.region > h2 { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.continent { margin-top: 28px; }
+.continent > h2 { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; padding-bottom: 8px; border-bottom: 2px solid var(--line); }
+.region { margin-top: 16px; }
+.region > h3 { font: 700 .78rem var(--sans); text-transform: uppercase; letter-spacing: .07em; color: var(--accent); margin-bottom: 10px; }
+.chips.sub { margin-top: -2px; }
+.chips.sub .chip { height: 32px; padding: 0 13px; font-size: .8rem; font-weight: 600; }
+.chips.sub .chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.search.compact { margin-bottom: 4px; }
+.search.compact input { height: 40px; font-size: .95rem; background: var(--bg); }
 .count { font: 600 .75rem var(--sans); background: var(--surface-2); color: var(--muted); padding: 2px 9px; border-radius: 999px; }
 .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
 .card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: transform .15s, box-shadow .15s; }
