@@ -11,6 +11,10 @@ Personal cookbook web app (installable PWA). Plain HTML/CSS/JS — no build step
 
 User state (shopping list, checked ingredients, servings, timers) lives in the browser's localStorage under `cookbook.*` keys.
 
+## Hosting
+
+Live at **https://lewisginn.github.io/Cookbook/** via GitHub Pages (repo `lewisginn/Cookbook`, served from `main` at `/`). Pushing to `main` redeploys in about a minute; installed phone copies pick up changes next time they open online (the service worker is network-first). GitHub CLI is at `C:\Program Files\GitHub CLI\gh.exe` (not on PATH in Claude's shell).
+
 ## Adding recipes
 
 Easiest path: write the new recipes into a scratch file such as `recipes/new.js`:
